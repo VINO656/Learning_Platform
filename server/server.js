@@ -33,7 +33,8 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/dist')));
 
   // Any route that is not API will be redirected to index.html
-  app.get('*', (req, res) => {
+  // Using app.use() as a catch-all to avoid path-to-regexp syntax errors in newer Express versions
+  app.use((req, res) => {
     res.sendFile(path.resolve(__dirname, '../client', 'dist', 'index.html'));
   });
 } else {
